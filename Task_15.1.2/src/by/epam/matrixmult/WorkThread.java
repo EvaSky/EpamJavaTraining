@@ -13,9 +13,9 @@ public class WorkThread implements Runnable{
     private Queue<Task> queue = new PriorityQueue<>();
     private Boolean isCompleted;
 
-    public WorkThread(Queue<Task> queue, Boolean completed) {
+    public WorkThread(Queue<Task> queue, Boolean isCompleted) {
         this.queue = queue;
-        this.isCompleted = completed;
+        this.isCompleted = isCompleted;
     }
 
     @Override
@@ -39,7 +39,6 @@ public class WorkThread implements Runnable{
             }
             try {
                 task.getResult().setElement(task.getI(), task.getJ(), value);
-                task.setCompleted(true);
             } catch (MatrixException e) {
                 e.printStackTrace();
             }
