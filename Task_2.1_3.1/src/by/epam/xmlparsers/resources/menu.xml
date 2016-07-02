@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<tc:menu
+            xmlns:tc="http://www.epam.tc.com/menu"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://www.epam.tc.com/menu menu.xsd">
+
+    <section>
+        <section-name>Холодные закуски</section-name>
+        <dishes>
+            <dish id="d1.1">
+                <photo>11.jpg</photo>
+                <name>Ассорти рыбное</name>
+                <description>Слабосоленая форель, семга</description>
+                <helping-weight>100/20/15</helping-weight>
+            </dish>
+            <dish id="d1.2">
+                <photo>12.jpg</photo>
+                <name>Куриный рулет</name>
+                <description>Куриный рулет собственного производства</description>
+                <helping-weight>100/5</helping-weight>
+            </dish>
+            <dish id="d1.3">
+                <photo>13.jpg</photo>
+                <name>Овощной букет</name>
+                <description>Корейская морковь, капуста, фунчоза</description>
+                <helping-weight>150/10</helping-weight>
+            </dish>
+        </dishes>
+    </section>
+
+    <section>
+        <section-name>Горячие закуски</section-name>
+        <dishes>
+            <dish id="d2.1">
+                <photo>21.jpg</photo>
+                <name>Лобио с шампиньонами</name>
+                <description>Фасоль с шампиньонами и грецким орехом</description>
+                <helping-weight>150.5</helping-weight>
+                <price>105</price>
+            </dish>
+            <dish id="d2.2">
+                <photo>22.jpg</photo>
+                <name>Жульен</name>
+                <description>1. с курицей 2. с грибами</description>
+                <helping-weight>120.1</helping-weight>
+                <price>1.145 2.155</price>
+            </dish >
+            <dish id="d2.3">
+                <photo>23.jpg</photo>
+                <name>Сюрприз</name>
+                <helping-weight>1 шт.</helping-weight>
+                <price>260</price>
+            </dish>
+        </dishes>
+    </section>
+
+    <section>
+        <section-name>Завтраки</section-name>
+        <dishes>
+            <dish id="d3.1">
+                <photo>31jpg</photo>
+                <name>Глазунья</name>
+                <description>2 яйца (на выбор: ветчина, сыр, помидоры)</description>
+                <helping-weight>150</helping-weight>
+            </dish>
+            <dish id="d3.2">
+                <photo>32.jpg</photo>
+                <name>Омлет</name>
+                <helping-weight>100</helping-weight>
+            </dish>
+            <dish id="d3.3">
+                <photo>33.jpg</photo>
+                <name>Блинчики с мясом</name>
+                <description>Жареные блинчики с мясом</description>
+                <helping-weight>150</helping-weight>
+            </dish>
+        </dishes>
+    </section>
+</tc:menu>

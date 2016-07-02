@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<schema xmlns="http://www.w3.org/2001/XMLSchema"
+        targetNamespace="http://www.epam.tc.com/menu"
+        xmlns:tns="http://www.epam.tc.com/menu">
+
+    <element name="menu">
+        <complexType>
+            <sequence>
+                <element name="section" type="tns:Section" maxOccurs="unbounded"/>
+            </sequence>
+        </complexType>
+    </element>
+
+    <complexType name="Section">
+        <sequence>
+            <element name="section-name">
+                <simpleType>
+                    <restriction base="string">
+                        <enumeration value="Холодные закуски"/>
+                        <enumeration value="Горячие закуски"/>
+                        <enumeration value="Завтраки"/>
+                    </restriction>
+                </simpleType>
+            </element>
+            <element name="dishes" type="tns:Dishes"/>
+        </sequence>
+    </complexType>
+
+    <complexType name="Dishes">
+        <sequence>
+            <element name="dish" maxOccurs="unbounded">
+                <complexType>
+                    <group ref="tns:DishDescription"/>
+                    <attribute name="id" type="ID"/>
+                </complexType>
+            </element>
+        </sequence>
+    </complexType>
+
+    <group name="DishDescription">
+        <sequence>
+            <element name="photo" type="string" minOccurs="0"/>
+            <element name="name" type="string"/>
+            <element name="description" type="string" minOccurs="0"/>
+            <element name="helping-weight" type="string"/>
+            <element name="price" type="string" minOccurs="0"/>
+        </sequence>
+    </group>
+
+</schema>
