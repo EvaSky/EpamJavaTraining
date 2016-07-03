@@ -5,8 +5,7 @@ package by.epam.matrixmult.exception;
  */
 public class MatrixException extends Exception {
 
-    public MatrixException() {
-    }
+    public MatrixException() {}
 
     public MatrixException(String message) {
         super(message);

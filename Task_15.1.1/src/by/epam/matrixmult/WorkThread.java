@@ -24,7 +24,8 @@ public class WorkThread implements Runnable{
     @Override
     public void run() {
         int value = 0;
-        for (int k = 0; k < matrix1.getSize(); k++) {
+        int size = matrix1.getSize();
+        for (int k = 0; k < size; k++) {
             try {
                 value += matrix1.getElement(i, k) * matrix2.getElement(k, j);
             } catch (MatrixException e) {

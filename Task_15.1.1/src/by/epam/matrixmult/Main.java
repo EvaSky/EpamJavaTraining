@@ -1,8 +1,9 @@
 package by.epam.matrixmult;
 
-import by.epam.matrixmult.domain.MatrixCreator;
+import by.epam.matrixmult.util.MatrixCreator;
 import by.epam.matrixmult.domain.Matrix;
 import by.epam.matrixmult.exception.MatrixException;
+import by.epam.matrixmult.util.Multiplicator;
 /**
  * Необходимо разработать многопоточное приложение, позволяющее перемножать квадратные матрицы одного(любого) порядка
  * При необходимости для синхронизации использовать только инструменты, доступные в версии Java 1.4.
@@ -44,8 +45,7 @@ public class Main {
             Matrix q = MatrixCreator.fillFromArray(5, array2);
             System.out.println("Matrix second is: " + q);
 
-            Multiplicator mult = new Multiplicator(p,q);
-            Matrix res = mult.multiply();
+            Matrix res = Multiplicator.multiply(p,q);
             System.out.println("Matrices product is " + res);
 
             System.out.println("Is result correct? " + (res.equals(MatrixCreator.fillFromArray(5, result)) ? "yes" : "no"));

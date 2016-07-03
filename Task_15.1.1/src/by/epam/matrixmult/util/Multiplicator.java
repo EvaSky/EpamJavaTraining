@@ -1,5 +1,6 @@
-package by.epam.matrixmult;
+package by.epam.matrixmult.util;
 
+import by.epam.matrixmult.WorkThread;
 import by.epam.matrixmult.domain.Matrix;
 import by.epam.matrixmult.exception.MatrixException;
 
@@ -11,19 +12,11 @@ import java.util.List;
  */
 public class Multiplicator{
 
-    private Matrix firstMatrix;
-    private Matrix secondMatrix;
-
-    public Multiplicator(Matrix firstMatrix, Matrix secondMatrix) throws MatrixException {
-        this.firstMatrix = firstMatrix;
-        this.secondMatrix = secondMatrix;
+    public static Matrix multiply(Matrix firstMatrix, Matrix secondMatrix) throws MatrixException{
         // проверка возможности умножения
         if (firstMatrix.getSize() != secondMatrix.getSize()) {
             throw new MatrixException("Incompatible matrices");
         }
-    }
-
-    public Matrix multiply() throws MatrixException{
         int v = firstMatrix.getSize();
         List<Thread> threads = new ArrayList<>();
 
