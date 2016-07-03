@@ -11,7 +11,7 @@ public class Matrix {
     private volatile int[][] a;
 
     public Matrix(int n) throws MatrixException {
-        // проверка на отрицательные значения размерности матрицы
+        // check negative range of matrix
         if (n < 1) {
             throw new MatrixException("Matrix size must be positive number");
         }
@@ -23,21 +23,21 @@ public class Matrix {
     }
 
     public int getElement(int i, int j) throws MatrixException {
-        if (checkRange(i, j)) { // проверка i и j
+        if (checkRange(i, j)) { // check i and j
             return a[i][j];
         }
         throw new MatrixException();
     }
 
     public synchronized void setElement(int i, int j, int value) throws MatrixException {
-        if (checkRange(i, j)) { // проверка i и j
+        if (checkRange(i, j)) { // check i and j
             a[i][j] = value;
         } else {
             throw new MatrixException("Position of element does't agree with matrix size");
         }
     }
 
-    // проверка возможности выхода за пределы матрицы
+    // check if i,j is not out of bounds of matrix
     private boolean checkRange(int i, int j) {
         return (i >= 0 && i < a.length && j >= 0 && j < a[0].length);
     }

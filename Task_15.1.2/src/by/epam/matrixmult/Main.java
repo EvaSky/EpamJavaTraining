@@ -1,8 +1,11 @@
 package by.epam.matrixmult;
 
-import by.epam.matrixmult.domain.MatrixCreator;
 import by.epam.matrixmult.domain.Matrix;
 import by.epam.matrixmult.exception.MatrixException;
+import by.epam.matrixmult.util.MatrixCreator;
+import by.epam.matrixmult.util.Multiplicator;
+
+import java.time.LocalTime;
 /**
  * Необходимо разработать многопоточное приложение, позволяющее перемножать квадратные матрицы одного(любого) порядка
  * При необходимости для синхронизации использовать только инструменты, доступные в версии Java 1.4.
@@ -39,16 +42,23 @@ public class Main {
 
     public static void main(String[] args) {
         try {
+            //Matrix p = MatrixCreator.fillOneElement(100, 1);
+            //Matrix q = MatrixCreator.fillOneElement(100, 2);
+            //Matrix r = MatrixCreator.fillOneElement(100, 200);
+
             Matrix p = MatrixCreator.fillFromArray(5, array1);
             System.out.println("Matrix first is: " + p);
             Matrix q = MatrixCreator.fillFromArray(5, array2);
             System.out.println("Matrix second is: " + q);
 
-            Multiplicator mult = new Multiplicator(p,q);
-            Matrix res = mult.multiply();
+            //long t1 = LocalTime.now().toNanoOfDay();
+            Matrix res = Multiplicator.multiply(p,q);
+            //long t2 = LocalTime.now().toNanoOfDay();
+            //System.out.println((t2-t1)/1000000);
             System.out.println("Matrices product is " + res);
 
             System.out.println("Is result correct? " + (res.equals(MatrixCreator.fillFromArray(5, result)) ? "yes" : "no"));
+            //System.out.println("Is result correct? " + (res.equals(r) ? "yes" : "no"));
 
         } catch (MatrixException e) {
             System.err.println(e.getMessage());

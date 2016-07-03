@@ -1,4 +1,4 @@
-package by.epam.matrixmult.domain;
+package by.epam.matrixmult.util;
 
 import by.epam.matrixmult.domain.Matrix;
 import by.epam.matrixmult.exception.MatrixException;

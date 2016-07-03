@@ -1,13 +1,15 @@
 package by.epam.matrixmult.domain;
 
+import by.epam.matrixmult.exception.MatrixException;
+
 /**
  * Created by Olga Shahray on 02.07.2016.
  */
-public class Task implements Comparable<Task>{
-    private volatile int i;
-    private volatile int j;
-    private volatile Matrix matrix1;
-    private volatile Matrix matrix2;
+public class Task{
+    private int i;
+    private int j;
+    private Matrix matrix1;
+    private Matrix matrix2;
     private volatile Matrix result;
 
     public Task(int i, int j, Matrix matrix1, Matrix matrix2, Matrix result) {
@@ -38,14 +40,38 @@ public class Task implements Comparable<Task>{
         return result;
     }
 
-    @Override
-    public int compareTo(Task o) {
-        if (this.i != o.getI()){
-            return this.i - o.getI();
+    public int[] getRow(){
+        int size = matrix1.getSize();
+        int[]row = new int[size];
+        for (int k = 0; k < size; k++) {
+            try {
+                row[k] = matrix1.getElement(i,k);
+            } catch (MatrixException e) {
+                e.printStackTrace();
+            }
         }
-        else{
-            return this.j - o.getJ();
-        }
-
+        return row;
     }
+
+    public int[] getColumn(){
+        int size = matrix2.getSize();
+        int[]column = new int[size];
+        for (int k = 0; k < size; k++) {
+            try {
+                column[k] = matrix2.getElement(k,j);
+            } catch (MatrixException e) {
+                e.printStackTrace();
+            }
+        }
+        return column;
+    }
+
+    public void setResultElement(int value){
+        try {
+            result.setElement(i, j, value);
+        } catch (MatrixException e) {
+            e.printStackTrace();
+        }
+    }
+
 }
