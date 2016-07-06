@@ -15,7 +15,7 @@ import java.util.regex.Pattern;
 public class Main {
 
     private static List<File> filesList = new ArrayList<>();
-    private static List<Float> results = new ArrayList<>();
+    private static List<Double> results = new ArrayList<>();
     private static List<Thread> threads = new ArrayList<>();
 
     public static void main(String[] args) {
@@ -33,7 +33,7 @@ public class Main {
 
         ResultSetter resultSetter = new ResultSetter() {
             @Override
-            public synchronized void setResult(Float result) {
+            public synchronized void setResult(Double result) {
                 results.add(result);
             }
         };
@@ -60,9 +60,9 @@ public class Main {
     }
 
     private static void getSum(File directory) throws FileNotFoundException, UnsupportedEncodingException {
-        Float result = 0f;
-        for (Float f : results) {
-            result += f;
+        Double result = 0.0;
+        for (Double d : results) {
+            result += d;
         }
         File file = new File(directory.getAbsolutePath() + "\\" + "out.dat");
         PrintWriter writer = new PrintWriter(file, "UTF-8");

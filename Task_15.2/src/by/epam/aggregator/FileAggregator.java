@@ -14,7 +14,7 @@ public class FileAggregator implements Runnable {
 
     private volatile File fileName;
     private volatile AggregateMethod aggregateMethod;
-    private volatile List<Float> fileContent = new ArrayList<>();
+    private volatile List<Double> fileContent = new ArrayList<>();
     private volatile ResultSetter resultSetter;
 
     public FileAggregator(File fileName, ResultSetter resultSetter) {
@@ -27,7 +27,7 @@ public class FileAggregator implements Runnable {
         try {
             readFile();
             if (fileContent.size() != 0) {
-               Float result = aggregation(aggregateMethod, fileContent);
+                Double result = aggregation(aggregateMethod, fileContent);
                 resultSetter.setResult(result);
             }
         } catch (FileNotFoundException e) {
@@ -37,7 +37,7 @@ public class FileAggregator implements Runnable {
 
 
     private void readFile() throws FileNotFoundException {
-        try(Scanner sc = new Scanner(new FileInputStream(fileName))) {
+        try (Scanner sc = new Scanner(new FileInputStream(fileName))) {
 
             if (sc.hasNextLine()) {
                 String operation = sc.nextLine();
@@ -48,35 +48,35 @@ public class FileAggregator implements Runnable {
                 String floats = sc.nextLine();
                 String[] ff = floats.split(" +");
                 for (String s : ff) {
-                    fileContent.add(Float.parseFloat(s));
+                    fileContent.add(Double.parseDouble(s));
                 }
             }
         }
     }
 
-    private Float aggregation(AggregateMethod aggregateMethod, List<Float> floats) {
-        Float result = 0f;
+    private Double aggregation(AggregateMethod aggregateMethod, List<Double> doubles) {
+        Double result = 0.0;
         switch (aggregateMethod) {
             case SUM:
-                for (Float f : floats) {
-                    result += f;
+                for (Double d : doubles) {
+                    result += d;
                 }
                 break;
             case MULTIPLICATION:
-                for (Float f : floats) {
+                for (Double d : doubles) {
                     if (result == 0) {
-                        result = f;
+                        result = d;
                     } else {
-                        result *= f;
+                        result *= d;
                     }
                 }
                 break;
             case SQUARES_SUM:
-                for (Float f : floats) {
-                    result += f * f;
+                for (Double d : doubles) {
+                    result += d * d;
                 }
                 break;
         }
-       return result;
+        return result;
     }
 }

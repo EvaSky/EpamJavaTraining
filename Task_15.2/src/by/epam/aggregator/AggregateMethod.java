@@ -16,6 +16,7 @@ public enum AggregateMethod {
     }
 
     public static AggregateMethod valueOf(int id) {
+
         if (id == SUM.id) {
             return AggregateMethod.SUM;
         } else if (id == MULTIPLICATION.id) {
