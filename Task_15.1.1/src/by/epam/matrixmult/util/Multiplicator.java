@@ -23,14 +23,11 @@ public class Multiplicator{
         // создание матрицы результата
         Matrix result = new Matrix(v);
 
-        //умножение с использованием дочерних потоков
-        Thread th;
+        //умножение с использованием дочерних потоков. Количество потоков = размер матрицы
         for (int i = 0; i < v; i++) {
-            for (int j = 0; j < v; j++) {
-                th = new Thread(new WorkThread(i, j, firstMatrix, secondMatrix, result));
-                threads.add(th);
-                th.start(); //запускаем потоки
-            }
+            Thread th = new Thread(new WorkThread(i, firstMatrix.getRow(i), secondMatrix, result));
+            threads.add(th);
+            th.start(); //запускаем потоки
         }
 
         for (Thread thread : threads){
@@ -40,7 +37,6 @@ public class Multiplicator{
                 throw new MatrixException("Error multiplying matrices", e);
             }
         }
-
         return result;
     }
 

@@ -22,6 +22,28 @@ public class Matrix {
         return a.length;
     }
 
+    public int[] getRow(int i) throws MatrixException {
+        if (checkRange(i)){
+            return a[i];
+        }
+        else{
+            throw new MatrixException("Position of element does't agree with matrix size");
+        }
+    }
+
+    public int[] getColumn(int i) throws MatrixException {
+        if (checkRange(i)){
+            int size = getSize();
+            int[] column = new int[size];
+            for (int j = 0; j < size; j++) {
+                column[j] = a[j][i];
+            }
+            return column;
+        }
+        else{
+            throw new MatrixException("Position of element does't agree with matrix size");
+        }
+    }
     public int getElement(int i, int j) throws MatrixException {
         if (checkRange(i, j)) { // check i and j
             return a[i][j];
@@ -41,6 +63,9 @@ public class Matrix {
     private boolean checkRange(int i, int j) {
         return (i >= 0 && i < a.length && j >= 0 && j < a[0].length);
     }
+
+    private boolean checkRange(int i) { return (i >=0 && i < a.length); }
+
 
     @Override
     public String toString() {

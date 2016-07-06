@@ -31,13 +31,11 @@ public class Multiplicator{
         WorkThread workThread1 = new WorkThread(queue);
         WorkThread workThread2 = new WorkThread(queue);
 
-        Task task;
         for (int i = 0; i < v; i++) {
-            for (int j = 0; j < v; j++) {
-                task = new Task(i, j, firstMatrix, secondMatrix, result);
-                queue.put(task);
-            }
+            Task task = new Task(i, firstMatrix.getRow(i), secondMatrix, result);
+            queue.put(task);
         }
+
         Thread thread1 = new Thread(workThread1);
         Thread thread2 = new Thread(workThread2);
         thread1.start();

@@ -42,23 +42,17 @@ public class Main {
 
     public static void main(String[] args) {
         try {
-            //Matrix p = MatrixCreator.fillOneElement(100, 1);
-            //Matrix q = MatrixCreator.fillOneElement(100, 2);
-            //Matrix r = MatrixCreator.fillOneElement(100, 200);
 
             Matrix p = MatrixCreator.fillFromArray(5, array1);
             System.out.println("Matrix first is: " + p);
             Matrix q = MatrixCreator.fillFromArray(5, array2);
             System.out.println("Matrix second is: " + q);
 
-            //long t1 = LocalTime.now().toNanoOfDay();
             Matrix res = Multiplicator.multiply(p,q);
-            //long t2 = LocalTime.now().toNanoOfDay();
-            //System.out.println((t2-t1)/1000000);
+
             System.out.println("Matrices product is " + res);
 
             System.out.println("Is result correct? " + (res.equals(MatrixCreator.fillFromArray(5, result)) ? "yes" : "no"));
-            //System.out.println("Is result correct? " + (res.equals(r) ? "yes" : "no"));
 
         } catch (MatrixException e) {
             System.err.println(e.getMessage());
