@@ -32,7 +32,7 @@ public class Ship implements Runnable{
         this.shipWarehouse = new Warehouse(shipWarehouseSize);
     }
 
-
+    //заполение трюма корабля контейнерами
     public void setContainersToWarehouse(List<Container> containerList) {
         shipWarehouse.addContainer(containerList);
     }
@@ -50,29 +50,29 @@ public class Ship implements Runnable{
         } catch (InterruptedException e) {
             logger.error("С кораблем случилась неприятность и он уничтожен.", e);
         } catch (PortException e) {
-            logger.error("Корабль не нашел причал", e);
+            logger.error("Кораблю не соответствует ни один причал", e);
         }
     }
-
+    //в море корабль плавает определенное время
     private void atSea() throws InterruptedException {
         Thread.sleep(1000);
     }
 
-
+    //действия корабля в порту
     private void inPort() throws PortException, InterruptedException {
         boolean isLockedBerth = false;
         Berth berth = null;
         try {
-            isLockedBerth = port.lockBerth(this);
+            isLockedBerth = port.lockBerth(this); //показывает, смог ли корабль занять причал
 
-            if (isLockedBerth) {
+            if (isLockedBerth) {  //да, причал занял. варианты действий - загрузка, выгрузка
                 berth = port.getBerth(this);
                 ShipAction action = getNextAction();
                 executeAction(action, berth);
             } else {
                 logger.info("Кораблю " + name + " отказано в швартовке к причалу ");
             }
-        } finally {
+        } finally {  //по окончании всех действий снимаем блокировку с причала, если он был заблокирован
             if (isLockedBerth) {
                 port.unlockBerth(this);
             }
@@ -89,15 +89,16 @@ public class Ship implements Runnable{
                 break;
         }
     }
-
+    //выгружаем контейнеры в порт
     private boolean loadToPort(Berth berth) throws InterruptedException {
 
-        int containersNumberToMove = conteinersCount(shipWarehouse.getRealSize());
+        //количество контейнеров, которое хотим выгрузить в порт. НЕ БОЛЬШЕ НАХОДЯЩИХСЯ НА КОРАБЛЕ!
+        int containersNumberToMove = containersCount(shipWarehouse.getRealSize());
         boolean result = false;
 
-        logger.debug("Корабль " + name + " хочет загрузить " + containersNumberToMove
+        logger.debug("Корабль " + name + " хочет выгрузить " + containersNumberToMove
                 + " контейнеров на склад порта.");
-
+        //выгрузка контейнеров
         result = berth.add(shipWarehouse, containersNumberToMove);
 
         if (!result) {
@@ -111,29 +112,35 @@ public class Ship implements Runnable{
         return result;
     }
 
+    //загружаем корабль с хранилища порта
     private boolean loadFromPort(Berth berth) throws InterruptedException {
 
-        int containersNumberToMove = conteinersCount(shipWarehouse.getFreeSize());
+        //количество контейнеров, которое хотим загрузить на корабль. НЕ БОЛЬШЕ СВОБОДНОГО МЕСТА НА КОРАБЛЕ!
+        int containersNumberToMove = containersCount(shipWarehouse.getFreeSize());
         boolean result = false;
+
         logger.debug("Корабль " + name + " хочет загрузить " + containersNumberToMove
                 + " контейнеров со склада порта.");
+        //загрузка корабля контейнерами
         result = berth.get(shipWarehouse, containersNumberToMove);
 
         if (result) {
             logger.debug("Корабль " + name + " загрузил " + containersNumberToMove
                     + " контейнеров из порта.");
         } else {
-            logger.debug("Недостаточно места на на корабле " + name
-                    + " для погрузки " + containersNumberToMove + " контейнеров из порта.");
+            logger.debug("Недостаточно места на на корабле " + name + " для погрузки "
+                    + containersNumberToMove + " контейнеров из порта.");
         }
 
         return result;
     }
 
-    private int conteinersCount(int maxCount) {
+    //случайное число контейнеров, не превышаюшее заданную величину
+    private int containersCount(int maxCount) {
         Random random = new Random();
         return random.nextInt(maxCount);
     }
+
 
     private ShipAction getNextAction() {
         Random random = new Random();

@@ -11,37 +11,42 @@ import java.util.List;
  * Created by Olga Shahray on 11.07.2016.
  */
 public class Main {
+    public static final int WAREHOUSE_PORTSIZE = 15;//заполненность хранилища порта
+    public static final int BERTH_NUM = 2; //количество причалов
+    public static final int WAREHOUSE_PORT_CAPACITY = 900;//общая вместимость склада порта
+    public static final int SHIP_WAREHOUSE_SIZE = 90; //
+
     public static void main(String[] args) throws InterruptedException {
 
-        int warehousePortSize = 15;//вместимость порта
-        List<Container> containerList = new ArrayList<>(warehousePortSize);
-        for (int i=0; i<warehousePortSize; i++){
+
+        List<Container> containerList = new ArrayList<>(WAREHOUSE_PORTSIZE);
+        for (int i=0; i < WAREHOUSE_PORTSIZE; i++){
             containerList.add(new Container(i));
         }
 
-        Port port = new Port(2, 900);//Порт - 2 причала, вместимость хранилища - 900
+        Port port = new Port(BERTH_NUM, WAREHOUSE_PORT_CAPACITY);//Порт - 2 причала, вместимость хранилища - 900
         port.setContainersToWarehouse(containerList);
 
 
-        containerList = new ArrayList<>(warehousePortSize);
-        for (int i=0; i<warehousePortSize; i++){  //15 шт
+        containerList = new ArrayList<>(WAREHOUSE_PORTSIZE);
+        for (int i=0; i < WAREHOUSE_PORTSIZE; i++){
             containerList.add(new Container(i+30));
         }
-        Ship ship1 = new Ship("Ship1", port, 90);
-        ship1.setContainersToWarehouse(containerList);//разгружаем контейнеры с корабля на склад порта
+        Ship ship1 = new Ship("Ship1", port, SHIP_WAREHOUSE_SIZE);
+        ship1.setContainersToWarehouse(containerList);
 
-        containerList = new ArrayList<>(warehousePortSize);
-        for (int i=0; i<warehousePortSize; i++){  //15 шт
+        containerList = new ArrayList<>(WAREHOUSE_PORTSIZE);
+        for (int i=0; i < WAREHOUSE_PORTSIZE; i++){
             containerList.add(new Container(i+60));
         }
-        Ship ship2 = new Ship("Ship2", port, 90);
+        Ship ship2 = new Ship("Ship2", port, SHIP_WAREHOUSE_SIZE);
         ship2.setContainersToWarehouse(containerList);
 
-        containerList = new ArrayList<>(warehousePortSize);
-        for (int i=0; i<warehousePortSize; i++){  //15 шт
-            containerList.add(new Container(i+60));
+        containerList = new ArrayList<>(WAREHOUSE_PORTSIZE);
+        for (int i=0; i < WAREHOUSE_PORTSIZE; i++){
+            containerList.add(new Container(i+90));
         }
-        Ship ship3 = new Ship("Ship3", port, 90);
+        Ship ship3 = new Ship("Ship3", port, SHIP_WAREHOUSE_SIZE);
         ship3.setContainersToWarehouse(containerList);
 
 
