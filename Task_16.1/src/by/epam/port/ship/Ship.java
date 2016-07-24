@@ -3,7 +3,6 @@ package by.epam.port.ship;
 import by.epam.port.exception.PortException;
 import by.epam.port.port.Berth;
 import by.epam.port.port.Port;
-
 import by.epam.port.warehouse.Container;
 import by.epam.port.warehouse.Warehouse;
 import org.apache.log4j.Logger;
@@ -23,8 +22,7 @@ public class Ship implements Runnable{
     private Port port;
     private Warehouse shipWarehouse;
 
-    public Ship() {
-    }
+    public Ship() {}
 
     public Ship(String name, Port port, int shipWarehouseSize) {
         this.name = name;
@@ -53,10 +51,13 @@ public class Ship implements Runnable{
             logger.error("Кораблю не соответствует ни один причал", e);
         }
     }
+
+
     //в море корабль плавает определенное время
     private void atSea() throws InterruptedException {
         Thread.sleep(1000);
     }
+
 
     //действия корабля в порту
     private void inPort() throws PortException, InterruptedException {
@@ -79,6 +80,7 @@ public class Ship implements Runnable{
         }
     }
 
+
     private void executeAction(ShipAction action, Berth berth) throws InterruptedException {
         switch (action) {
             case LOAD_TO_PORT:
@@ -89,6 +91,8 @@ public class Ship implements Runnable{
                 break;
         }
     }
+
+
     //выгружаем контейнеры в порт
     private boolean loadToPort(Berth berth) throws InterruptedException {
 
@@ -107,10 +111,10 @@ public class Ship implements Runnable{
         } else {
             logger.debug("Корабль " + name + " выгрузил " + containersNumberToMove
                     + " контейнеров в порт.");
-
         }
         return result;
     }
+
 
     //загружаем корабль с хранилища порта
     private boolean loadFromPort(Berth berth) throws InterruptedException {
@@ -119,21 +123,20 @@ public class Ship implements Runnable{
         int containersNumberToMove = containersCount(shipWarehouse.getFreeSize());
         boolean result = false;
 
-        logger.debug("Корабль " + name + " хочет загрузить " + containersNumberToMove
-                + " контейнеров со склада порта.");
+        logger.debug("Корабль " + name + " хочет загрузить " + containersNumberToMove + " контейнеров со склада порта.");
         //загрузка корабля контейнерами
         result = berth.get(shipWarehouse, containersNumberToMove);
 
         if (result) {
-            logger.debug("Корабль " + name + " загрузил " + containersNumberToMove
-                    + " контейнеров из порта.");
+            logger.debug("Корабль " + name + " загрузил " + containersNumberToMove + " контейнеров из порта.");
         } else {
-            logger.debug("Недостаточно места на на корабле " + name + " для погрузки "
+            logger.debug("Недостаточно места на корабле " + name + " для погрузки "
                     + containersNumberToMove + " контейнеров из порта.");
         }
 
         return result;
     }
+
 
     //случайное число контейнеров, не превышаюшее заданную величину
     private int containersCount(int maxCount) {
@@ -153,7 +156,7 @@ public class Ship implements Runnable{
     }
 
 
-    enum ShipAction {
+    private enum ShipAction {
         LOAD_TO_PORT, LOAD_FROM_PORT
     }
 }
