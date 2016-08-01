@@ -49,25 +49,21 @@ public class Port {
             return true;
         } catch (InterruptedException e) {
             e.printStackTrace();
+            return false;
         }
-        return false;
     }
 
     //снимаем блокировку с причала. Освобожденный причал добавлям в очередь причалов
-    public boolean unlockBerth(Ship ship) {
-        Berth berth = null;
-        try {
-            berth = getBerth(ship);
-        } catch (PortException e) {
-            e.printStackTrace();
-        }
+    public boolean unlockBerth(Ship ship) throws PortException {
+        Berth berth = getBerth(ship);
+        //данные два метода не залочены, т.к. нет цели получить актуальное состояние usedBerth в каждую единицу времени.
+        //на правильность работы приложения это не влияет. Однако если надо иметь актуальное состояние "журнала", то необходима блокировка
         berthQueue.add(berth);
         usedBerths.remove(ship);
         return true;
     }
 
     public Berth getBerth(Ship ship) throws PortException {
-
         Berth berth = usedBerths.get(ship);
         if (berth == null) {
             throw new PortException("Try to use Berth without blocking.");

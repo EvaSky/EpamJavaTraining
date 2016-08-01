@@ -10,11 +10,11 @@ import java.util.Objects;
 public class Warehouse {
 
     private List<Container> containerList;
-    private int size;
+    private int capacity; //общая вместимость склада
 
-    public Warehouse(int size) {
-        containerList = new ArrayList<>(size);
-        this.size = size;
+    public Warehouse(int capacity) {
+        containerList = new ArrayList<>(capacity);
+        this.capacity = capacity;
     }
 
     public boolean addContainer(Container container) {
@@ -22,14 +22,7 @@ public class Warehouse {
     }
 
     public boolean addContainer(List<Container> containers) {
-        boolean result = false;
-        if(containers.size() <= getFreeSize()){
-            result = containerList.addAll(containers);
-        }
-        else {
-            return false;
-        }
-        return result;
+        return (containers.size() <= getFreeSize()) ? containerList.addAll(containers) : false;
     }
 
     public Container getContainer() {
@@ -48,29 +41,29 @@ public class Warehouse {
         return null;
     }
 
-    public int getSize(){
-        return size;
+    public int getCapacity(){
+        return capacity;
     }
 
     public int getRealSize(){
         return containerList.size();
-    }
+    } //заполненность склада контейнерами
 
     public int getFreeSize(){
-        return size - containerList.size();
-    }
+        return capacity - containerList.size();
+    }//свободные места на складе
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Warehouse warehouse = (Warehouse) o;
-        return size == warehouse.size &&
+        return capacity == warehouse.capacity &&
                 Objects.equals(containerList, warehouse.containerList);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(containerList, size);
+        return Objects.hash(containerList, capacity);
     }
 }

@@ -25,30 +25,27 @@ public class Berth {
     }
 
     //выгружаем контейнеры с корабля на склад порта в заданной количестве
-    //перепроверить и исправить
     public boolean add(Warehouse shipWarehouse, int numberOfContainers) throws InterruptedException {
-        boolean result = false;
         synchronized (portWarehouse) {
             if (portWarehouse.getFreeSize() >= numberOfContainers) {
-                result = true;
                 List<Container> listContainer = shipWarehouse.getContainer(numberOfContainers);
                 portWarehouse.addContainer(listContainer);
+                return  true;
             }
         }
-        return result;
+        return false;
     }
 
-    //перепроверить и исправить
+    //загружаем контейнеры на корабль со склада порта в заданной количестве
     public boolean get(Warehouse shipWarehouse, int numberOfContainers) throws InterruptedException {
-        boolean result = false;
         synchronized (portWarehouse) {
             if (portWarehouse.getRealSize() >= numberOfContainers) {
-                result = true;
                 List<Container> listContainers = portWarehouse.getContainer(numberOfContainers);
                 shipWarehouse.addContainer(listContainers);
+                return true;
             }
         }
-        return result;
+        return false;
     }
 
 }

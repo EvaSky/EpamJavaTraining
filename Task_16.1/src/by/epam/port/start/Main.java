@@ -11,10 +11,10 @@ import java.util.List;
  * Created by Olga Shahray on 11.07.2016.
  */
 public class Main {
-    public static final int WAREHOUSE_PORTSIZE = 15;//заполненность хранилища порта
-    public static final int BERTH_NUM = 2; //количество причалов
-    public static final int WAREHOUSE_PORT_CAPACITY = 900;//общая вместимость склада порта
-    public static final int SHIP_WAREHOUSE_SIZE = 90; //вместимость трюма корабля
+    private static final int WAREHOUSE_PORTSIZE = 15;//заполненность хранилища порта
+    private static final int BERTH_NUM = 2; //количество причалов
+    private static final int WAREHOUSE_PORT_CAPACITY = 900;//общая вместимость склада порта
+    private static final int SHIP_WAREHOUSE_SIZE = 90; //вместимость трюма корабля
 
     public static void main(String[] args) throws InterruptedException {
 

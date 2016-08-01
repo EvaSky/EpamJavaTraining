@@ -8,6 +8,7 @@ import by.epam.port.warehouse.Warehouse;
 import org.apache.log4j.Logger;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.Random;
 
 /**
@@ -76,6 +77,7 @@ public class Ship implements Runnable{
         } finally {  //по окончании всех действий снимаем блокировку с причала, если он был заблокирован
             if (isLockedBerth) {
                 port.unlockBerth(this);
+                logger.debug("Корабль " + name + " отошел от причала " + berth.getId());
             }
         }
     }
@@ -98,20 +100,16 @@ public class Ship implements Runnable{
 
         //количество контейнеров, которое хотим выгрузить в порт. НЕ БОЛЬШЕ НАХОДЯЩИХСЯ НА КОРАБЛЕ!
         int containersNumberToMove = containersCount(shipWarehouse.getRealSize());
-        boolean result = false;
 
         logger.debug("Корабль " + name + " хочет выгрузить " + containersNumberToMove
-                + " контейнеров на склад порта.");
+                + " контейнеров на склад порта. Вместимость корабля: " + shipWarehouse.getCapacity() +",  "
+                +shipWarehouse.getRealSize()+" "+shipWarehouse.getFreeSize());
         //выгрузка контейнеров
-        result = berth.add(shipWarehouse, containersNumberToMove);
+        boolean result = berth.add(shipWarehouse, containersNumberToMove);
 
-        if (!result) {
-            logger.debug("Недостаточно места на складе порта для выгрузки кораблем "
-                    + name + " " + containersNumberToMove + " контейнеров.");
-        } else {
-            logger.debug("Корабль " + name + " выгрузил " + containersNumberToMove
-                    + " контейнеров в порт.");
-        }
+        logger.debug( result ? "Корабль " + name + " выгрузил " + containersNumberToMove + " контейнеров в порт."
+                : "Недостаточно места на складе порта для выгрузки кораблем " + name + " " + containersNumberToMove + " контейнеров.");
+
         return result;
     }
 
@@ -121,18 +119,13 @@ public class Ship implements Runnable{
 
         //количество контейнеров, которое хотим загрузить на корабль. НЕ БОЛЬШЕ СВОБОДНОГО МЕСТА НА КОРАБЛЕ!
         int containersNumberToMove = containersCount(shipWarehouse.getFreeSize());
-        boolean result = false;
 
         logger.debug("Корабль " + name + " хочет загрузить " + containersNumberToMove + " контейнеров со склада порта.");
         //загрузка корабля контейнерами
-        result = berth.get(shipWarehouse, containersNumberToMove);
+        boolean result = berth.get(shipWarehouse, containersNumberToMove);
 
-        if (result) {
-            logger.debug("Корабль " + name + " загрузил " + containersNumberToMove + " контейнеров из порта.");
-        } else {
-            logger.debug("Недостаточно места на корабле " + name + " для погрузки "
-                    + containersNumberToMove + " контейнеров из порта.");
-        }
+        logger.debug( result ? "Корабль " + name + " загрузил " + containersNumberToMove + " контейнеров из порта."
+                : "Недостаточно контейнеров в порту для погрузки на корабль" + name +". Контейнеров в порту "+ containersNumberToMove);
 
         return result;
     }
@@ -141,7 +134,7 @@ public class Ship implements Runnable{
     //случайное число контейнеров, не превышаюшее заданную величину
     private int containersCount(int maxCount) {
         Random random = new Random();
-        return random.nextInt(maxCount);
+        return random.nextInt(maxCount) + 1;
     }
 
 
@@ -158,5 +151,21 @@ public class Ship implements Runnable{
 
     private enum ShipAction {
         LOAD_TO_PORT, LOAD_FROM_PORT
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Ship ship = (Ship) o;
+        return stopShip == ship.stopShip &&
+                Objects.equals(name, ship.name) &&
+                Objects.equals(port, ship.port) &&
+                Objects.equals(shipWarehouse, ship.shipWarehouse);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(stopShip, name, port, shipWarehouse);
     }
 }
